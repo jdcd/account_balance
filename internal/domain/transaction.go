@@ -17,3 +17,11 @@ type Transaction struct {
 	Movement MovementType
 	Value    float32
 }
+
+// IgnoredTransaction represent a transaction without valid format, that was ignored
+type IgnoredTransaction struct {
+	ID          string
+	Date        string
+	Transaction string
+	Reason      string
+}
