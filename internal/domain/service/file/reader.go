@@ -14,18 +14,18 @@ import (
 const (
 	currentYear                   = "2023" // To complete the challenge, a date needs a year
 	dateParserLayout              = "1/2/2006"
-	emptyFileError                = " the file %s is empty"
+	emptyFileError                = "the file %s is empty"
 	invalidTransactionFormatError = "transaction value \"%s\" have incorrect format"
 	openingFileError              = "the file %s could not be opened: %s\n"
 	readingFileError              = "the file %s could not be reading: %s\n"
 	unclosedFileError             = "the file %s could not be closed: %s\n"
 )
 
-// Service provides functionality related to transaction files
-type Service struct{}
+// ReaderService provides functionality related to read transaction files
+type ReaderService struct{}
 
 // ReadFile reads a csv file of transactions and discriminates them by admitted or discarded
-func (s *Service) ReadFile(fileName string) ([]domain.Transaction, []domain.IgnoredTransaction, error) {
+func (s *ReaderService) ReadFile(fileName string) ([]domain.Transaction, []domain.IgnoredTransaction, error) {
 	records, err := s.getRecords(fileName)
 	if err != nil {
 		return nil, nil, err
@@ -60,7 +60,7 @@ func (s *Service) ReadFile(fileName string) ([]domain.Transaction, []domain.Igno
 	return transactions, ignored, nil
 }
 
-func (s *Service) formatTransaction(record []string) (domain.Transaction, error) {
+func (s *ReaderService) formatTransaction(record []string) (domain.Transaction, error) {
 	number, err := strconv.Atoi(record[0])
 	if err != nil {
 		return domain.Transaction{}, err
@@ -86,7 +86,7 @@ func (s *Service) formatTransaction(record []string) (domain.Transaction, error)
 	return tr, nil
 }
 
-func (s *Service) getRecords(fileName string) ([][]string, error) {
+func (s *ReaderService) getRecords(fileName string) ([][]string, error) {
 	file, err := os.Open(fileName)
 
 	defer func(file *os.File) {
@@ -113,7 +113,7 @@ func (s *Service) getRecords(fileName string) ([][]string, error) {
 	return records, nil
 }
 
-func (s *Service) parseValue(tr string) (domain.MovementType, float32, error) {
+func (s *ReaderService) parseValue(tr string) (domain.MovementType, float32, error) {
 	if len(tr) < 2 {
 		return "", 0, fmt.Errorf(invalidTransactionFormatError, tr)
 	}

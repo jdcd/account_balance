@@ -25,7 +25,7 @@ func TestReadFileWithErrorsAndValidData(t *testing.T) {
 		{Number: 4, Date: auxTestParseDate("8/15"), Movement: domain.Credit, Value: 5.5},
 	}
 
-	ms := Service{}
+	ms := ReaderService{}
 	tr, ig, err := ms.ReadFile(path)
 
 	assert.Nil(t, err)
@@ -39,7 +39,7 @@ func TestWhenNotFoundFileThenReadFileShouldReturnError(t *testing.T) {
 	var transactionsExpected []domain.Transaction
 	errorExpected := fmt.Errorf("open %s: no such file or directory", path)
 
-	ms := Service{}
+	ms := ReaderService{}
 	tr, ig, err := ms.ReadFile(path)
 
 	assert.Equal(t, errorExpected.Error(), err.Error())
