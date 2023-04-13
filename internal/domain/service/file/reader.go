@@ -11,6 +11,11 @@ import (
 	"github.com/jdcd/account_balance/pkg"
 )
 
+// IReader contracts related to read transaction files
+type IReader interface {
+	ReadFile(fileName string) ([]domain.Transaction, []domain.IgnoredTransaction, error)
+}
+
 const (
 	currentYear                   = "2023" // To complete the challenge, a date needs a year
 	dateParserLayout              = "1/2/2006"
@@ -21,7 +26,7 @@ const (
 	unclosedFileError             = "the file %s could not be closed: %s\n"
 )
 
-// ReaderService provides functionality related to read transaction files
+// ReaderService implements IReader reading for a csv file on current file system.
 type ReaderService struct{}
 
 // ReadFile reads a csv file of transactions and discriminates them by admitted or discarded

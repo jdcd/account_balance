@@ -6,10 +6,14 @@ import (
 	"github.com/jdcd/account_balance/internal/domain"
 )
 
-// ProcessService provides functionality related to process transaction files
+// IProcess provides contracts related to process transaction files
+type IProcess interface {
+	MakeSummary(transactions []domain.Transaction) domain.Summary
+}
+
+// ProcessService provides implements IProcess with the challenge's business rules
 type ProcessService struct{}
 
-// MakeSummary return a domain.Summary struct, for a domain.Transaction array
 func (s *ProcessService) MakeSummary(transactions []domain.Transaction) domain.Summary {
 	var total, totalD, totalC, avrD, avrC float32
 	var countC, countD int

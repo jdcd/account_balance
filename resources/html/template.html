@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Account summary notification</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            color: #333;
+            font-family: Arial, sans-serif;
+            padding: 0;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        header {
+            background-color: #00cccc;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: normal;
+        }
+        nav {
+            background-color: #eee;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #333;
+            text-decoration: none;
+            padding: 5px;
+        }
+        nav a:hover {
+            color: #00cccc;
+        }
+        section {
+            padding: 20px;
+        }
+        footer {
+            background-color: #ff99cc;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <img src="cid:logo.png" alt="company_log">
+    <h1>Your Report</h1>
+</header>
+<section>
+    <p><b>Total balance is:</b> {{.Total}}</p>
+    <p><b>Average debit amount:</b>  {{.AvrDebitAmount}}</p>
+    <p><b>Average credit amount:</b>  {{.AvrCreditAmount}}</p>
+    {{range $key, $value := .TransactionByMonth}}
+        <p><b>Number of transactions in {{$key}}:</b> {{$value}}</p>
+    {{end}}
+</section>
+<footer>
+    <p>All rights reserved © 2023 - jdcd test</p>
+    <a href="#">Terms and conditions</a>
+    <a href="#">Privacy policy</a>
+</footer>
+</body>
+</html>
