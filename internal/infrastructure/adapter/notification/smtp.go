@@ -11,9 +11,10 @@ import (
 )
 
 const (
-	imageNotFoundWarning = "branding image not found: %s"
-	emailDidNotSend      = "error sending notification: %s"
-	htmlResourcePath     = "../../../../resources/html/"
+	imageNotFoundWarning   = "branding image not found: %s"
+	emailDidNotSend        = "error sending notification: %s"
+	errorSendingEmailError = "error sending notification: %s"
+	htmlResourcePath       = "resources/html/"
 )
 
 type SmtpEmailSender struct {
@@ -40,8 +41,9 @@ func (s *SmtpEmailSender) SendNotification(n domain.Notification) error {
 	e.HTML = []byte(n.Content)
 	smtpHost := fmt.Sprintf("%s:%s", s.SmtpServer, s.SmtpPort)
 
-	err = e.Send(s.SmtpServer, smtp.PlainAuth(s.SmtpIdentity, s.EmailSender, s.EmailPwd, smtpHost))
+	err = e.Send(smtpHost, smtp.PlainAuth(s.SmtpIdentity, s.EmailSender, s.EmailPwd, s.SmtpServer))
 	if err != nil {
+		pkg.ErrorLogger().Printf(errorSendingEmailError, err)
 		return fmt.Errorf(emailDidNotSend, err)
 	}
 

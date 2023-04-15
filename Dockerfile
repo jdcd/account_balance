@@ -4,11 +4,18 @@ WORKDIR /go/src/account_balance
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go/bin/account_balance cmd/account_balance.go
 
-FROM scratch
+FROM alpine:3.17
 
 ENV GOPROXY=https://proxy.golang.org
 ENV GIN_MODE=release
 
+RUN mkdir -p /csv_files/pending && \
+    mkdir /csv_files/processed && \
+    mkdir /csv_files/error
+
 COPY --from=build /go/bin/account_balance /app
+COPY --from=build /go/src/account_balance/resources* /resources
+COPY --from=build /go/src/account_balance/resources* /resources
+COPY --from=build /go/src/account_balance/resources/csv/test.csv /csv_files/pending/test.csv
 
 ENTRYPOINT ["/app"]

@@ -11,15 +11,15 @@ import (
 type HtmlSummaryGenerator struct{}
 
 const (
-	templatePath          = "../../../../resources/html/template.html"
-	templateNotFoundError = "template %s could not be opened"
+	templatePath          = "resources/html/template.html"
+	templateNotFoundError = "template %s could not be opened: %s"
 	templateExecError     = "error parsing the html template: %s"
 )
 
 func (g *HtmlSummaryGenerator) FormatSummary(summary domain.Summary) (string, error) {
 	tmpl, err := template.ParseFiles(templatePath)
 	if err != nil {
-		pkg.ErrorLogger().Printf(templateNotFoundError, err)
+		pkg.ErrorLogger().Printf(templateNotFoundError, templatePath, err)
 		return "", err
 	}
 
