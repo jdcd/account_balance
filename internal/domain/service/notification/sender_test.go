@@ -2,15 +2,15 @@ package notification
 
 import (
 	"errors"
+	"github.com/jdcd/account_balance/internal/mock/port"
 	"testing"
 
 	"github.com/jdcd/account_balance/internal/domain"
-	"github.com/jdcd/account_balance/resources/mock"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestTemplateGeneratorIsWrongThenSendNotificationReturnError(t *testing.T) {
-	generatorHtmlMock := &mock.GeneratorMock{}
+	generatorHtmlMock := &port.GeneratorMock{}
 	ms := SenderService{SummaryTemplateGenerator: generatorHtmlMock}
 	emailList := []string{"example@gmail.com"}
 	expectedError := errors.New("an error")
@@ -22,9 +22,10 @@ func TestTemplateGeneratorIsWrongThenSendNotificationReturnError(t *testing.T) {
 	assert.EqualValues(t, expectedError, err)
 	generatorHtmlMock.AssertExpectations(t)
 }
+
 func TestWhenDeliveryServiceANdTemplateGeneratorIsOkThenSendNotificationReturnOk(t *testing.T) {
-	deliveryMock := &mock.DeliveryMock{}
-	generatorHtmlMock := &mock.GeneratorMock{}
+	deliveryMock := &port.DeliveryMock{}
+	generatorHtmlMock := &port.GeneratorMock{}
 	ms := SenderService{
 		NotificationDeliveryService: deliveryMock,
 		SummaryTemplateGenerator:    generatorHtmlMock,

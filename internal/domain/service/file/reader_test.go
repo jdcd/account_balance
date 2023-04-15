@@ -10,7 +10,7 @@ import (
 )
 
 func TestReadFileWithErrorsAndValidData(t *testing.T) {
-	path := "test.csv"
+	path := "../../../../resources/csv/test.csv"
 	ignoredExpected := []domain.IgnoredTransaction{
 		{ID: "5", Date: "8/16", Transaction: "10.5", Reason: fmt.Sprintf(invalidTransactionFormatError, "10.5")},
 		{ID: "FAIL", Date: "8/17", Transaction: "+9.5", Reason: "strconv.Atoi: parsing \"FAIL\": invalid syntax"},
