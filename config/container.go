@@ -57,6 +57,7 @@ func getNotificationService(config *AppConfiguration) notificationService.ISende
 			EmailSenderName: config.EmailSenderName,
 			SmtpServer:      config.SmtpServer,
 			SmtpPort:        config.SmtpPort,
+			SmtpIdentity:    config.SmtpIdentity,
 		},
 		SummaryTemplateGenerator: &template.HtmlSummaryGenerator{},
 	}

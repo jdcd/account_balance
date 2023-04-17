@@ -28,6 +28,7 @@ services:
       EMAIL_SENDER_NAME: "notifications-stori"
       SMTP_SERVER: ""
       SMTP_PORT: "587"
+      SMTP_IDENTITY: ""
     depends_on:
       db:
         condition: service_healthy
