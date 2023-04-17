@@ -1,6 +1,8 @@
 package service
 
 import (
+	"time"
+
 	"github.com/jdcd/account_balance/internal/domain"
 	"github.com/jdcd/account_balance/internal/domain/service/file"
 	"github.com/stretchr/testify/mock"
@@ -46,6 +48,6 @@ func (m *FinderMock) GiveNextFileName() (string, error) {
 	return args.String(0), args.Error(1)
 }
 
-func (m *FinderMock) Relocate(filePath string, newFolder file.Directory) {
-	m.Called(filePath, newFolder)
+func (m *FinderMock) Relocate(filePath string, date time.Time, newFolder file.Directory) {
+	m.Called(filePath, date, newFolder)
 }

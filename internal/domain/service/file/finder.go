@@ -2,19 +2,20 @@ package file
 
 import (
 	"fmt"
-	"github.com/jdcd/account_balance/pkg"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/jdcd/account_balance/pkg"
 )
 
-// IFinder provides contracts related to find transaction files on filesystem
+// IFinder provides contracts related to find report files on filesystem
 type IFinder interface {
 	// GiveNextFileName returns the name of the next csv file to process
 	GiveNextFileName() (fileName string, err error)
 
 	// Relocate changes csv file location
-	Relocate(filePath string, newFolder Directory)
+	Relocate(filePath string, date time.Time, newFolder Directory)
 }
 
 type Directory string
@@ -47,10 +48,10 @@ func (s *FinderService) GiveNextFileName() (string, error) {
 	return fileName, err
 }
 
-func (s *FinderService) Relocate(filePath string, newFolder Directory) {
+func (s *FinderService) Relocate(filePath string, date time.Time, newFolder Directory) {
 	fileName := filepath.Base(filePath)
-	date := time.Now().Format(fileTimeFormat)
-	newPath := fmt.Sprintf("%s/%s-%s", s.getDirectory(newFolder), fileName, date)
+	formattedDate := date.Format(fileTimeFormat)
+	newPath := fmt.Sprintf("%s/%s-%s", s.getDirectory(newFolder), fileName, formattedDate)
 
 	err := os.Rename(filePath, newPath)
 	if err != nil {

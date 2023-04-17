@@ -11,7 +11,7 @@ import (
 	"github.com/jdcd/account_balance/pkg"
 )
 
-// IReader contracts related to read transaction files
+// IReader contracts related to read report files
 type IReader interface {
 	ReadFile(fileName string) ([]domain.Transaction, []domain.IgnoredTransaction, error)
 }
@@ -20,7 +20,7 @@ const (
 	currentYear                   = "2023" // To complete the challenge, a date needs a year
 	dateParserLayout              = "1/2/2006"
 	emptyFileError                = "the file %s is empty"
-	invalidTransactionFormatError = "transaction value \"%s\" have incorrect format"
+	invalidTransactionFormatError = "report value \"%s\" has incorrect format"
 	openingFileError              = "the file %s could not be opened: %s\n"
 	readingFileError              = "the file %s could not be reading: %s\n"
 	unclosedFileError             = "the file %s could not be closed: %s\n"

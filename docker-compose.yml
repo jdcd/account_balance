@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15.2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./migration:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: "app"
+    environment:
+      DB_URL: "host=db port=5432 user=postgres password=12345 sslmode=disable"
+      EMAIL_SENDER: ""
+      EMAIL_PWD: ""
+      EMAIL_SENDER_NAME: "notifications-stori"
+      SMTP_SERVER: ""
+      SMTP_PORT: "587"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+volumes:
+  db-data:

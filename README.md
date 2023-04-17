@@ -7,30 +7,28 @@ This project was build keeping in mind the most important
 things about [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
 
-### Make image
+### Run project
 
-remember set your env variables to connect to repository,
-migration/mongo-init-js contains init script for your repository
+Configure your smtp server data inside docker-compose.yml file
+    
+      EMAIL_SENDER: ""
+      EMAIL_PWD: ""
+      EMAIL_SENDER_NAME: ""
+      SMTP_SERVER: ""
+      SMTP_PORT: ""
+      SMTP_IDENTITY: ""
 
-    docker build -t stori .
+build the image for the container using the following command inside the main project folder
 
-### Create container
+    docker-compose build
 
-    Run project
-    docker run \
-    -e EMAIL_SENDER={source mail} \
-    -e EMAIL_PWD={source mail pwd} \
-    -e EMAIL_SENDER_NAME={display name of source mail} \
-    -e SMTP_SERVER={smtp server domain, for example "smtp.gmail.com"} \
-    -e SMTP_PORT=587 \
-    -e PORT=8181 \
-    -p 8181:8181 \
-    -d --name stori_engine \
+finally you can up the service with the following command
 
+    docker-compose up
 
-### Basic Request
+### Example Request
 Process file
 
     curl --location 'http://localhost:8080/v1/report' \
     --header 'Content-Type: application/json' \
-    --data-raw '{"email_list": ["cheems@gmail.com", "bob@space.com"]}'
+    --data-raw '{"email_list": ["cheems@gmail.com"]}'
