@@ -1,10 +1,13 @@
 package config
 
 import (
+	"database/sql"
+
 	"github.com/jdcd/account_balance/internal/application"
 	"github.com/jdcd/account_balance/internal/domain/service/file"
 	notificationService "github.com/jdcd/account_balance/internal/domain/service/notification"
 	notificationAdapter "github.com/jdcd/account_balance/internal/infrastructure/adapter/notification"
+	"github.com/jdcd/account_balance/internal/infrastructure/adapter/report/postgresSQL"
 	"github.com/jdcd/account_balance/internal/infrastructure/adapter/template"
 	"github.com/jdcd/account_balance/internal/infrastructure/http/server"
 	"github.com/jdcd/account_balance/internal/infrastructure/http/server/controller"
@@ -26,10 +29,16 @@ func getReportDependencies(config *AppConfiguration) *controller.ReportControlle
 			Finder:    finderImpl,
 			Reader:    &file.ReaderService{},
 			Processor: &file.ProcessService{},
+			Repository: &postgresSQL.Repository{
+				Writer: getPostgresSQLConnection(config.DbUrl)},
 		},
 		PickerUseCase: &application.FilePickerUseCase{Finder: finderImpl},
 	}
 
+}
+
+func getPostgresSQLConnection(dbUrl string) *sql.DB {
+	return postgresSQL.GetConnection(dbUrl)
 }
 
 func getFinderService() file.IFinder {

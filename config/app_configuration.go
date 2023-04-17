@@ -15,6 +15,7 @@ func GetConfigurations() *AppConfiguration {
 		EmailSenderName: os.Getenv("EMAIL_SENDER_NAME"),
 		SmtpServer:      os.Getenv("SMTP_SERVER"),
 		SmtpPort:        os.Getenv("SMTP_PORT"),
+		DbUrl:           os.Getenv("DB_URL"),
 	}
 }
 
@@ -25,6 +26,7 @@ type AppConfiguration struct {
 	EmailSenderName string
 	SmtpServer      string
 	SmtpPort        string
+	DbUrl           string
 }
 
 func (r *AppConfiguration) CheckData() error {
@@ -42,5 +44,4 @@ func (r *AppConfiguration) CheckData() error {
 	}
 
 	return nil
-
 }

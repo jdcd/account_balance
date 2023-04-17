@@ -6,7 +6,7 @@ import (
 	"github.com/jdcd/account_balance/internal/domain"
 )
 
-// IProcess provides contracts related to process transaction files
+// IProcess provides contracts related to process report files
 type IProcess interface {
 	MakeSummary(transactions []domain.Transaction) domain.Summary
 }
