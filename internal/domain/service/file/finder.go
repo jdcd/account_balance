@@ -51,7 +51,7 @@ func (s *FinderService) GiveNextFileName() (string, error) {
 func (s *FinderService) Relocate(filePath string, date time.Time, newFolder Directory) {
 	fileName := filepath.Base(filePath)
 	formattedDate := date.Format(fileTimeFormat)
-	newPath := fmt.Sprintf("%s/%s-%s", s.getDirectory(newFolder), fileName, formattedDate)
+	newPath := fmt.Sprintf("%s/%s-%s", s.getDirectory(newFolder), formattedDate, fileName)
 
 	err := os.Rename(filePath, newPath)
 	if err != nil {

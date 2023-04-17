@@ -63,8 +63,8 @@
 </header>
 <section>
     <p><b>Total balance is:</b> {{.Total}}</p>
-    <p><b>Average debit amount:</b>  {{.AvrDebitAmount}}</p>
-    <p><b>Average credit amount:</b>  {{.AvrCreditAmount}}</p>
+    <p><b>Average debit amount:</b>  {{printf "%.2f" .AvrDebitAmount}}</p>
+    <p><b>Average credit amount:</b>  {{printf "%.2f" .AvrCreditAmount}}</p>
     {{range $key, $value := .TransactionByMonth}}
         <p><b>Number of transactions in {{$key}}:</b> {{$value}}</p>
     {{end}}

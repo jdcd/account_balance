@@ -15,6 +15,7 @@ func GetConfigurations() *AppConfiguration {
 		EmailSenderName: os.Getenv("EMAIL_SENDER_NAME"),
 		SmtpServer:      os.Getenv("SMTP_SERVER"),
 		SmtpPort:        os.Getenv("SMTP_PORT"),
+		SmtpIdentity:    os.Getenv("SMTP_IDENTITY"),
 		DbUrl:           os.Getenv("DB_URL"),
 	}
 }
@@ -26,6 +27,7 @@ type AppConfiguration struct {
 	EmailSenderName string
 	SmtpServer      string
 	SmtpPort        string
+	SmtpIdentity    string
 	DbUrl           string
 }
 

@@ -15,7 +15,6 @@ RUN mkdir -p /csv_files/pending && \
 
 COPY --from=build /go/bin/account_balance /app
 COPY --from=build /go/src/account_balance/resources* /resources
-COPY --from=build /go/src/account_balance/resources* /resources
-COPY --from=build /go/src/account_balance/resources/csv/test.csv /csv_files/pending/test.csv
+COPY --from=build /go/src/account_balance/resources/csv/example.csv /csv_files/pending/example.csv
 
 ENTRYPOINT ["/app"]
